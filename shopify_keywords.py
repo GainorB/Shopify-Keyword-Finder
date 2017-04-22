@@ -22,25 +22,26 @@ def shopify_keywords():
                 found_url = "Found URL: " + urls_found.find("loc").text
                 all_found_urls.append(urls_found.find("loc").text + ".xml")
                 print(found_url)
+
     for found_products in all_found_urls:
         response = session.get(found_products)
         soup = bs(response.content, 'html.parser')
         ProductName1 = soup.find('hash')
         ProductName = ProductName1.find('title').text
         TagsOfProduct = soup.find('tags').text
-        print("-----------------------------------------------------")
-        print("Product name: " + str(ProductName) + ". Tags: " + str(TagsOfProduct))
-        print("-----------------------------------------------------")
+        print('-'*80, '\nProduct name: {}. Tags: {}\n'.format(ProductName, TagsOfProduct), '-'*80)
         for variants in soup.find_all('variant'):
             size_id = variants.find('id', {'type': 'integer'}).text
             shoe_size = variants.find('title').text
             shoe_stock = variants.find('inventory-quantity', {"type": "integer"}).text
                         ####shoe_price
-            print("Size: " + shoe_size + ". ID: " + size_id + ". Stock: " + shoe_stock)
+            print("Size: {}. ID: {}. Stock: {}".format(shoe_size, size_id, shoe_stock))
             if int(shoe_stock) >= 1:
-                print("ATC LINK: " + "https://" + str(site) + ".com/cart/" + size_id + ":" + "1")
+                print("ATC LINK: https://{}.com/cart/{}:1".format(site, size_id))
 
-shopify_keywords()
+# runs the script BRO
+if __name__ == '__main__':
+    shopify_keywords()
 
 
 
