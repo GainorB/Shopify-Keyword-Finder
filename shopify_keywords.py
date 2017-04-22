@@ -6,7 +6,7 @@ def shopify_keywords():
     print("\nSite options (feel free to try other shopify sites):\ncncpts\nbdgastore\nus.bape\n")
     site = input("Please choose a site: ")
 
-    keywords = input("Please enter keywords (seperate by commas): ").lower().split()
+    keywords = input("Please enter keywords (seperate by spaces): ").lower().split()
     print('Searching for products with the following keywords: {}'.format(keywords))
 
     session = requests.session()
