@@ -3,23 +3,17 @@ from bs4 import BeautifulSoup as bs
 import time, timeit
 
 def shopify_keywords():
-    print(
-    """
-    Site options (feel free to try other shopify sites):
-    cncpts
-    bdgastore
-    us.bape
-
-
-    """)
+    print("\nSite options (feel free to try other shopify sites):\ncncpts\nbdgastore\nus.bape\n")
     site = input("Please choose a site: ")
-    keyword = input("Please enter keywords: ").lower()
-    keywords = keyword.split()
-    print(keywords)
+
+    keywords = input("Please enter keywords (seperate by commas): ").lower().split()
+    print('Searching for products with the following keywords: {}'.format(keywords))
+
     session = requests.session()
     url = "https://{}.com/sitemap_products_1.xml?".format(site)
     response = session.get(url)
     soup = bs(response.content, 'html.parser')
+
     all_found_urls = []
     for urls_found in soup.find_all("url"):
         for keyword_search in urls_found.find_all("image:image"):
