@@ -26,15 +26,14 @@ def shopify_keywords():
     for found_products in all_found_urls:
         response = session.get(found_products)
         soup = bs(response.content, 'html.parser')
-        ProductName1 = soup.find('hash')
-        ProductName = ProductName1.find('title').text
-        TagsOfProduct = soup.find('tags').text
-        print('-'*80, '\nProduct name: {}. Tags: {}\n'.format(ProductName, TagsOfProduct), '-'*80)
+        product_name = soup.find('hash').find('title').text
+        product_tags = soup.find('tags').text
+        print('-'*80, '\nProduct name: {}. Tags: {}\n'.format(product_name, product_tags), '-'*80)
+
         for variants in soup.find_all('variant'):
             size_id = variants.find('id', {'type': 'integer'}).text
             shoe_size = variants.find('title').text
             shoe_stock = variants.find('inventory-quantity', {"type": "integer"}).text
-                        ####shoe_price
             print("Size: {}. ID: {}. Stock: {}".format(shoe_size, size_id, shoe_stock))
             if int(shoe_stock) >= 1:
                 print("ATC LINK: https://{}.com/cart/{}:1".format(site, size_id))
